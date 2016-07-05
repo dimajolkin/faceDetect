@@ -3,7 +3,9 @@ FROM ubuntu:16.04
 RUN apt update
 
 RUN apt-get install -y  python2.7-dev cmake
+RUN apt install -y python-pip
 RUN pip install numpy
+RUN apt install -y git
 
 RUN cd ~ && git clone https://github.com/Itseez/opencv.git &&\
     cd opencv && git checkout 3.0.0
@@ -20,5 +22,5 @@ RUN  cd ~/opencv && mkdir build && cd build && cmake  -D CMAKE_BUILD_TYPE=RELEAS
 
 RUN cd ~/opencv/build && make -j8
 RUN cd ~/opencv/build && make install && ldconfig
-RUN apt install -y libgtk2.0-dev
+#RUN apt install -y libgtk2.0-dev
 #RUN pkg-config
