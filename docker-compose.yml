@@ -1,0 +1,11 @@
+app:
+  tty: true
+  build: ./
+  net: "host"
+  ports:
+      - "8888:8888"
+  environment:
+     - DISPLAY=$DISPLAY
+  volumes:
+        - /tmp:/tmp
+        - /var/log:/var/log
