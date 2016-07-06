@@ -12,8 +12,11 @@ RUN cd ~ && git clone https://github.com/Itseez/opencv.git &&\
 
 RUN cd ~ &&  git clone https://github.com/Itseez/opencv_contrib.git &&\
     cd opencv_contrib && git checkout 3.0.0
+RUN apt install -y libqt4-dev
 
-RUN  cd ~/opencv && mkdir build && cd build && cmake  -D CMAKE_BUILD_TYPE=RELEASE \
+RUN  cd ~/opencv && mkdir build && cd build && cmake \
+            -D  WITH_QT=ON \
+            -D CMAKE_BUILD_TYPE=RELEASE \
             -D CMAKE_INSTALL_PREFIX=/usr/local \
             -D INSTALL_C_EXAMPLES=ON \
             -D INSTALL_PYTHON_EXAMPLES=ON \
@@ -22,5 +25,7 @@ RUN  cd ~/opencv && mkdir build && cd build && cmake  -D CMAKE_BUILD_TYPE=RELEAS
 
 RUN cd ~/opencv/build && make -j8
 RUN cd ~/opencv/build && make install && ldconfig
-#RUN apt install -y libgtk2.0-dev
+RUN apt install -y libgtk2.0-dev
 #RUN pkg-config
+VOLUME /tmp/.X11-unix:/tmp/.X11-unix
+CMD cd ~/opencv/samples/python2/ &&  python facedetect.py  ../data/lena.jpg

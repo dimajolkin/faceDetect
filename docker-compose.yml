@@ -1,3 +1,4 @@
+#first run:# xhost
 app:
   tty: true
   build: ./
@@ -5,7 +6,7 @@ app:
   ports:
       - "8888:8888"
   environment:
-     - DISPLAY=$DISPLAY
+     - DISPLAY=unix$DISPLAY
   volumes:
         - /tmp:/tmp
         - /var/log:/var/log
