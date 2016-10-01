@@ -38,6 +38,8 @@ RUN apt install -y wget unzip vim
 
 #RUN cd ~/crop/src/ && make check
 RUN apt-get install -y python-serial
+WORKDIR /root/app
+
 ADD ./ /root/app
 
 EXPOSE 5000

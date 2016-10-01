@@ -1,9 +1,13 @@
 import cv2
-import numpy as np
-import sys
-import os.path
+import os
 
-cascPath = '/root/opencv/data/haarcascades/haarcascade_frontalface_alt.xml'
+cascPath = os.path.dirname(os.path.abspath(__file__))  + '/data/haarcascade_frontalface_alt.xml'
+print "hello"
+if not os.path.isfile(cascPath):
+    print "file not exist " + cascPath
+    exit()
+
+
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 video_capture = cv2.VideoCapture(0)
@@ -11,10 +15,6 @@ video_capture.set(cv2.CAP_PROP_FRAME_COUNT, 10)
 video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 500)
 video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 500)
 
-print "hello"
-if not os.path.isfile(cascPath):
-    print "file not exist " + cascPath
-    exit()
 
 
 while True:
