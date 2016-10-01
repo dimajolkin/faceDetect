@@ -7,6 +7,13 @@ app:
       - "8888:8888"
   environment:
      - DISPLAY=unix$DISPLAY
+     - XAUTHORITY=$XAUTHORITY
+  devices:
+     - /dev/video1
+     - /dev/video0
+     - /dev/ttyUSB2
+
   volumes:
-        - /tmp:/tmp
-        - /var/log:/var/log
+     - /home/dima/gitHub/faceDetect:/root/app
+     - /tmp
+     - /tmp/.X11-unix:/tmp/.X11-unix:ro

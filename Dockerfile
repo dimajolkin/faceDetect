@@ -26,6 +26,18 @@ RUN  cd ~/opencv && mkdir build && cd build && cmake \
 RUN cd ~/opencv/build && make -j8
 RUN cd ~/opencv/build && make install && ldconfig
 RUN apt install -y libgtk2.0-dev
+RUN mkdir ~/app
 #RUN pkg-config
 VOLUME /tmp/.X11-unix:/tmp/.X11-unix
-CMD cd ~/opencv/samples/python2/ &&  python facedetect.py  ../data/lena.jpg
+
+RUN apt-get install -y libboost-all-dev
+
+RUN apt install -y wget unzip vim
+#RUN wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/imageclipper/imageclipper20081208.zip &&\
+#    unzip imageclipper20081208.zip  -d ~/crop
+
+#RUN cd ~/crop/src/ && make check
+RUN apt-get install -y python-serial
+ADD ./ /root/app
+
+EXPOSE 5000
