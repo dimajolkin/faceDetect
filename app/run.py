@@ -40,6 +40,7 @@ while True:
         center = (centerX, centerY)
         cv2.circle(frame, center, 10, color=(0, 0, 255))
         print center
+        break
 
     # Display the resulting frame
     cv2.imshow('Video', frame)
