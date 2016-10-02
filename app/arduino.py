@@ -4,6 +4,8 @@ import serial
 class Arduino:
    serial = None
    found = False
+   def __init__(self):
+       self.old_command = ""
 
    def connect(self):
        self.found = False
@@ -29,7 +31,10 @@ class Arduino:
        self.serial.close()
 
    def push(self, message):
-       self.serial.write(message)
+       if self.old_command != message:
+           print "push: " + message
+           self.serial.write(message)
+           self.old_command = message
 
 
 

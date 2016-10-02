@@ -10,7 +10,7 @@ app:
      - XAUTHORITY=$XAUTHORITY
   devices:
      - /dev/video0   #web camera
-#     - /dev/ttyUSB0 #arduino
+     - /dev/ttyUSB1 #arduino
 
   volumes:
      - /home/dima/gitHub/faceDetect:/root/app

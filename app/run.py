@@ -1,12 +1,16 @@
 import cv2
 import os
 
+from arduino import Arduino
+
+arduino = Arduino()
+arduino.connect()
+
 cascPath = os.path.dirname(os.path.abspath(__file__))  + '/data/haarcascade_frontalface_alt.xml'
 print "hello"
 if not os.path.isfile(cascPath):
     print "file not exist " + cascPath
     exit()
-
 
 faceCascade = cv2.CascadeClassifier(cascPath)
 
@@ -14,7 +18,6 @@ video_capture = cv2.VideoCapture(0)
 video_capture.set(cv2.CAP_PROP_FRAME_COUNT, 10)
 video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 500)
 video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 500)
-
 
 
 while True:
@@ -32,16 +35,37 @@ while True:
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
+    height, width, channels = frame.shape
+
+    cv2.line(frame, (width / 2, 0), (width / 2, height), color=(0, 0, 255))
+
+    if len(faces) == 0:
+        arduino.push("0 0")
+
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
         centerX = x + (w / 2)
         centerY = y + (h / 2)
         center = (centerX, centerY)
-        cv2.circle(frame, center, 10, color=(0, 0, 255))
-        print center
-        break
 
+        cv2.circle(frame, center, 20, color=(0, 0, 255))
+
+        if x < width /2 and x + w > width / 2:
+            push_x = 0
+        elif width / 2 > centerX:
+            push_x = -1
+        else:
+            push_x = 1
+
+        if y < height /2 and y + h > height / 2:
+            push_y = 0
+        elif height / 2 > centerY:
+            push_y = 1
+        else:
+            push_y = -1
+
+        arduino.push("{0} {1}".format(push_x, push_y))
     # Display the resulting frame
     cv2.imshow('Video', frame)
 
